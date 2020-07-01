@@ -154,7 +154,3 @@ for _, t := range text {
 
 wg.Wait()
 ```
-
-## Roadmap
-* Remove channels that are in an error state from the pool.
-* Validate required command parameters.
