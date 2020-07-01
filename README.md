@@ -1,4 +1,8 @@
 # sonic
+[![Build Status](https://travis-ci.org/stevecallear/sonic.svg?branch=master)](https://travis-ci.org/stevecallear/sonic)
+[![codecov](https://codecov.io/gh/stevecallear/sonic/branch/master/graph/badge.svg)](https://codecov.io/gh/stevecallear/sonic)
+[![Go Report Card](https://goreportcard.com/badge/github.com/stevecallear/sonic)](https://goreportcard.com/report/github.com/stevecallear/sonic)
+
 Sonic is a [Sonic](https://github.com/valeriansaliou/sonic) client for Go. It was created with the intention of offering a fully thread-safe client that can be shared across Go routines.
 
 ## Getting Started
