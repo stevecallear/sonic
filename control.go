@@ -1,7 +1,6 @@
 package sonic
 
 import (
-	"errors"
 	"fmt"
 	"regexp"
 	"strconv"
@@ -35,12 +34,7 @@ type (
 	}
 )
 
-var (
-	// ErrInvalidInfoResponse indicates the the response from INFO is invalid
-	ErrInvalidInfoResponse = errors.New("control: invalid INFO response")
-
-	infoRegexp = regexp.MustCompile(`^RESULT uptime\((\d+)\) clients_connected\((\d+)\) commands_total\((\d+)\) command_latency_best\((\d+)\) command_latency_worst\((\d+)\) kv_open_count\((\d+)\) fst_open_count\((\d+)\) fst_consolidate_count\((\d+)\)$`)
-)
+var infoRegexp = regexp.MustCompile(`^RESULT uptime\((\d+)\) clients_connected\((\d+)\) commands_total\((\d+)\) command_latency_best\((\d+)\) command_latency_worst\((\d+)\) kv_open_count\((\d+)\) fst_open_count\((\d+)\) fst_consolidate_count\((\d+)\)$`)
 
 // NewControl returns a new control client
 func NewControl(o Options) *Control {
@@ -84,14 +78,14 @@ func (c *Control) Info() (InfoResponse, error) {
 
 	strs := infoRegexp.FindStringSubmatch(res.(string))
 	if len(strs) != 9 {
-		return InfoResponse{}, ErrInvalidInfoResponse
+		return InfoResponse{}, ErrInvalidResponse
 	}
 
 	ints := make([]int, len(strs)-1, len(strs)-1)
 	for idx, s := range strs[1:] {
 		i, err := strconv.Atoi(s)
 		if err != nil {
-			return InfoResponse{}, ErrInvalidInfoResponse
+			return InfoResponse{}, ErrInvalidResponse
 		}
 
 		ints[idx] = i

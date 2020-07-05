@@ -94,7 +94,7 @@ func (i *Ingest) Pop(r PopRequest) (int, error) {
 
 			n, err := strconv.Atoi(strings.Split(res, " ")[1])
 			if err != nil {
-				return nt, err
+				return nt, ErrInvalidResponse
 			}
 
 			nt += n
@@ -133,7 +133,12 @@ func (i *Ingest) Count(r CountRequest) (int, error) {
 			return nil, err
 		}
 
-		return strconv.Atoi(strings.Split(res, " ")[1])
+		n, err := strconv.Atoi(strings.Split(res, " ")[1])
+		if err != nil {
+			return 0, ErrInvalidResponse
+		}
+
+		return n, nil
 	})
 	if err != nil {
 		return 0, err

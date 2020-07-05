@@ -71,7 +71,7 @@ func TestIngest_Push(t *testing.T) {
 			name: "should return push errors",
 			setup: func(s *Server) {
 				s.ConfigureStart("ingest", 20000)
-				s.On(`^PUSH`).Send("ERR PUSH")
+				s.On("^PUSH").Send("ERR PUSH")
 			},
 			request: sonic.PushRequest{
 				Collection: "collection",
@@ -177,6 +177,20 @@ func TestIngest_Pop(t *testing.T) {
 			err: errors.New("POP"),
 		},
 		{
+			name: "should return an error if the result cannot be parsed",
+			setup: func(s *Server) {
+				s.ConfigureStart("ingest", 20000)
+				s.On("^POP").Send("RESULT invalid")
+			},
+			request: sonic.PopRequest{
+				Collection: "collection",
+				Bucket:     "bucket",
+				Object:     "object",
+				Text:       "text",
+			},
+			err: sonic.ErrInvalidResponse,
+		},
+		{
 			name: "should pop the text",
 			setup: func(s *Server) {
 				s.ConfigureStart("ingest", 20000)
@@ -250,7 +264,7 @@ func TestIngest_Count(t *testing.T) {
 			name: "should return count errors",
 			setup: func(s *Server) {
 				s.ConfigureStart("ingest", 20000)
-				s.On(`^COUNT`).Send("ERR COUNT")
+				s.On("^COUNT").Send("ERR COUNT")
 			},
 			request: sonic.CountRequest{
 				Collection: "collection",
@@ -258,10 +272,21 @@ func TestIngest_Count(t *testing.T) {
 			err: errors.New("COUNT"),
 		},
 		{
+			name: "should return an error if the result cannot be parsed",
+			setup: func(s *Server) {
+				s.ConfigureStart("ingest", 20000)
+				s.On("^COUNT").Send("RESULT invalid")
+			},
+			request: sonic.CountRequest{
+				Collection: "collection",
+			},
+			err: sonic.ErrInvalidResponse,
+		},
+		{
 			name: "should count the collection",
 			setup: func(s *Server) {
 				s.ConfigureStart("ingest", 20000)
-				s.On(`^COUNT collection$`).Send("RESULT 10")
+				s.On("^COUNT collection$").Send("RESULT 10")
 			},
 			request: sonic.CountRequest{
 				Collection: "collection",
@@ -272,7 +297,7 @@ func TestIngest_Count(t *testing.T) {
 			name: "should count the bucket",
 			setup: func(s *Server) {
 				s.ConfigureStart("ingest", 20000)
-				s.On(`^COUNT collection bucket$`).Send("RESULT 10")
+				s.On("^COUNT collection bucket$").Send("RESULT 10")
 			},
 			request: sonic.CountRequest{
 				Collection: "collection",
@@ -284,7 +309,7 @@ func TestIngest_Count(t *testing.T) {
 			name: "should count the object",
 			setup: func(s *Server) {
 				s.ConfigureStart("ingest", 20000)
-				s.On(`^COUNT collection bucket object$`).Send("RESULT 10")
+				s.On("^COUNT collection bucket object$").Send("RESULT 10")
 			},
 			request: sonic.CountRequest{
 				Collection: "collection",
@@ -338,7 +363,7 @@ func TestIngest_Flush(t *testing.T) {
 			name: "should return flush errors",
 			setup: func(s *Server) {
 				s.ConfigureStart("ingest", 20000)
-				s.On(`^FLUSHC`).Send("ERR FLUSHC")
+				s.On("^FLUSHC").Send("ERR FLUSHC")
 			},
 			request: sonic.FlushRequest{
 				Collection: "collection",
@@ -349,7 +374,7 @@ func TestIngest_Flush(t *testing.T) {
 			name: "should flush the collection",
 			setup: func(s *Server) {
 				s.ConfigureStart("ingest", 20000)
-				s.On(`^FLUSHC collection$`).Send("RESULT 10")
+				s.On("^FLUSHC collection$").Send("RESULT 10")
 			},
 			request: sonic.FlushRequest{
 				Collection: "collection",
@@ -360,7 +385,7 @@ func TestIngest_Flush(t *testing.T) {
 			name: "should flush the bucket",
 			setup: func(s *Server) {
 				s.ConfigureStart("ingest", 20000)
-				s.On(`^FLUSHB collection bucket$`).Send("RESULT 10")
+				s.On("^FLUSHB collection bucket$").Send("RESULT 10")
 			},
 			request: sonic.FlushRequest{
 				Collection: "collection",
@@ -372,7 +397,7 @@ func TestIngest_Flush(t *testing.T) {
 			name: "should flush the object",
 			setup: func(s *Server) {
 				s.ConfigureStart("ingest", 20000)
-				s.On(`^FLUSHO collection bucket object$`).Send("RESULT 10")
+				s.On("^FLUSHO collection bucket object$").Send("RESULT 10")
 			},
 			request: sonic.FlushRequest{
 				Collection: "collection",
@@ -424,7 +449,7 @@ func TestIngest_Ping(t *testing.T) {
 			name: "should return ping errors",
 			setup: func(s *Server) {
 				s.ConfigureStart("ingest", 20000)
-				s.On(`^PING$`).Send("ERR PING")
+				s.On("^PING$").Send("ERR PING")
 			},
 			exp: errors.New("PING"),
 		},
@@ -432,7 +457,7 @@ func TestIngest_Ping(t *testing.T) {
 			name: "should ping the server",
 			setup: func(s *Server) {
 				s.ConfigureStart("ingest", 20000)
-				s.On(`^PING$`).Send("PONG")
+				s.On("^PING$").Send("PONG")
 			},
 		},
 	}

@@ -23,6 +23,9 @@ var (
 		return net.Dial("tcp", addr)
 	}
 
+	// ErrInvalidResponse indicates that the received response message is invalid
+	ErrInvalidResponse = errors.New("invalid response")
+
 	bufferRegex = regexp.MustCompile(`^.+buffer\(([0-9]+)\)$`)
 )
 
@@ -123,7 +126,7 @@ func (c *channel) Split(s string) []string {
 func parseMaxRunes(msg string) (int, error) {
 	m := bufferRegex.FindStringSubmatch(msg)
 	if len(m) != 2 {
-		return 0, errors.New("invalid STARTED message")
+		return 0, ErrInvalidResponse
 	}
 
 	b, err := strconv.Atoi(m[1])
