@@ -9,7 +9,7 @@ test: generate
 
 .PHONY: cover
 cover: generate
-	go test -coverprofile=coverage.out ./...
+	go test -race -coverprofile=coverage.out -covermode=atomic ./...
 	go tool cover -func=coverage.out
 	rm coverage.out
 

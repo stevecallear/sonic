@@ -72,7 +72,7 @@ func TestSearch_Query(t *testing.T) {
 			name: "should return pending errors",
 			setup: func(s *Server) {
 				s.ConfigureStart("search", 20000)
-				s.On(`^QUERY`).Send("ERR PENDING")
+				s.On("^QUERY").Send("ERR PENDING")
 			},
 			err: errors.New("PENDING"),
 		},
@@ -80,7 +80,7 @@ func TestSearch_Query(t *testing.T) {
 			name: "should return event errors",
 			setup: func(s *Server) {
 				s.ConfigureStart("search", 20000)
-				s.On(`^QUERY`).Send("PENDING z98uDE0f").Send("ERR EVENT")
+				s.On("^QUERY").Send("PENDING z98uDE0f").Send("ERR EVENT")
 			},
 			err: errors.New("EVENT"),
 		},
@@ -162,7 +162,7 @@ func TestSearch_Suggest(t *testing.T) {
 			name: "should return pending errors",
 			setup: func(s *Server) {
 				s.ConfigureStart("search", 20000)
-				s.On(`^SUGGEST`).Send("ERR PENDING")
+				s.On("^SUGGEST").Send("ERR PENDING")
 			},
 			err: errors.New("PENDING"),
 		},
@@ -170,7 +170,7 @@ func TestSearch_Suggest(t *testing.T) {
 			name: "should return event errors",
 			setup: func(s *Server) {
 				s.ConfigureStart("search", 20000)
-				s.On(`^SUGGEST`).Send("PENDING z98uDE0f").Send("ERR EVENT")
+				s.On("^SUGGEST").Send("PENDING z98uDE0f").Send("ERR EVENT")
 			},
 			err: errors.New("EVENT"),
 		},
@@ -248,7 +248,7 @@ func TestSearch_Ping(t *testing.T) {
 			name: "should return ping errors",
 			setup: func(s *Server) {
 				s.ConfigureStart("search", 20000)
-				s.On(`^PING$`).Send("ERR PING")
+				s.On("^PING").Send("ERR PING")
 			},
 			exp: errors.New("PING"),
 		},
@@ -256,7 +256,7 @@ func TestSearch_Ping(t *testing.T) {
 			name: "should ping the server",
 			setup: func(s *Server) {
 				s.ConfigureStart("search", 20000)
-				s.On(`^PING$`).Send("PONG")
+				s.On("^PING").Send("PONG")
 			},
 		},
 	}

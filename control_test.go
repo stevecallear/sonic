@@ -72,7 +72,7 @@ func TestControl_Trigger(t *testing.T) {
 			name: "should return trigger errors",
 			setup: func(s *Server) {
 				s.ConfigureStart("control", 20000)
-				s.On(`^TRIGGER$`).Send("ERR TRIGGER")
+				s.On("^TRIGGER").Send("ERR TRIGGER")
 			},
 			err: errors.New("TRIGGER"),
 		},
@@ -80,7 +80,7 @@ func TestControl_Trigger(t *testing.T) {
 			name: "should trigger the action",
 			setup: func(s *Server) {
 				s.ConfigureStart("control", 20000)
-				s.On(`^TRIGGER action$`).Send("OK")
+				s.On("^TRIGGER action$").Send("OK")
 			},
 			request: sonic.TriggerRequest{
 				Action: "action",
@@ -90,7 +90,7 @@ func TestControl_Trigger(t *testing.T) {
 			name: "should include optional parameters",
 			setup: func(s *Server) {
 				s.ConfigureStart("control", 20000)
-				s.On(`^TRIGGER action data$`).Send("OK")
+				s.On("^TRIGGER action data$").Send("OK")
 			},
 			request: sonic.TriggerRequest{
 				Action: "action",
@@ -140,7 +140,7 @@ func TestControl_Info(t *testing.T) {
 			name: "should return info errors",
 			setup: func(s *Server) {
 				s.ConfigureStart("control", 20000)
-				s.On(`^INFO$`).Send("ERR INFO")
+				s.On("^INFO$").Send("ERR INFO")
 			},
 			err: errors.New("INFO"),
 		},
@@ -148,23 +148,23 @@ func TestControl_Info(t *testing.T) {
 			name: "should return an error if the response is invalid",
 			setup: func(s *Server) {
 				s.ConfigureStart("control", 20000)
-				s.On(`^INFO$`).Send("INVALID")
+				s.On("^INFO$").Send("INVALID")
 			},
-			err: sonic.ErrInvalidInfoResponse,
+			err: sonic.ErrInvalidResponse,
 		},
 		{
 			name: "should return an error if the response cannot be parsed",
 			setup: func(s *Server) {
 				s.ConfigureStart("control", 20000)
-				s.On(`^INFO$`).Send("RESULT uptime(a) clients_connected(b) commands_total(c) command_latency_best(d) command_latency_worst(e) kv_open_count(f) fst_open_count(g) fst_consolidate_count(h)")
+				s.On("^INFO$").Send("RESULT uptime(a) clients_connected(b) commands_total(c) command_latency_best(d) command_latency_worst(e) kv_open_count(f) fst_open_count(g) fst_consolidate_count(h)")
 			},
-			err: sonic.ErrInvalidInfoResponse,
+			err: sonic.ErrInvalidResponse,
 		},
 		{
 			name: "should return the server info",
 			setup: func(s *Server) {
 				s.ConfigureStart("control", 20000)
-				s.On(`^INFO$`).Send("RESULT uptime(18) clients_connected(2) commands_total(1) command_latency_best(3) command_latency_worst(4) kv_open_count(5) fst_open_count(6) fst_consolidate_count(7)")
+				s.On("^INFO$").Send("RESULT uptime(18) clients_connected(2) commands_total(1) command_latency_best(3) command_latency_worst(4) kv_open_count(5) fst_open_count(6) fst_consolidate_count(7)")
 			},
 			exp: sonic.InfoResponse{
 				Uptime:              18 * time.Second,
@@ -220,7 +220,7 @@ func TestControl_Ping(t *testing.T) {
 			name: "should return ping errors",
 			setup: func(s *Server) {
 				s.ConfigureStart("control", 20000)
-				s.On(`^PING$`).Send("ERR PING")
+				s.On("^PING$").Send("ERR PING")
 			},
 			exp: errors.New("PING"),
 		},
@@ -228,7 +228,7 @@ func TestControl_Ping(t *testing.T) {
 			name: "should ping the server",
 			setup: func(s *Server) {
 				s.ConfigureStart("control", 20000)
-				s.On(`^PING$`).Send("PONG")
+				s.On("^PING$").Send("PONG")
 			},
 		},
 	}
