@@ -123,6 +123,14 @@ func (c *channel) Split(s string) []string {
 	return ss
 }
 
+func (c *channel) Escape(s string) string {
+	s = strings.Replace(s, "\\", "\\\\", -1)
+	s = strings.Replace(s, "\n", "\\n", -1)
+	s = strings.Replace(s, "\"", "\\\"", -1)
+
+	return s
+}
+
 func parseMaxRunes(msg string) (int, error) {
 	m := bufferRegex.FindStringSubmatch(msg)
 	if len(m) != 2 {

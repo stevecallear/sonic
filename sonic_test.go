@@ -104,7 +104,7 @@ func (s *Server) Run(t *testing.T, fn func(*testing.T, net.Conn)) {
 
 	for _, r := range s.responses {
 		if !r.matched {
-			t.Errorf("not matched: \"%s\"", r.regex)
+			t.Errorf("not matched: %s", r.regex)
 		}
 	}
 }

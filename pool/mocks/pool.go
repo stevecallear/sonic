@@ -75,6 +75,20 @@ func (mr *MockChannelMockRecorder) Split(arg0 interface{}) *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Split", reflect.TypeOf((*MockChannel)(nil).Split), arg0)
 }
 
+// Escape mocks base method
+func (m *MockChannel) Escape(arg0 string) string {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Escape", arg0)
+	ret0, _ := ret[0].(string)
+	return ret0
+}
+
+// Escape indicates an expected call of Escape
+func (mr *MockChannelMockRecorder) Escape(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Escape", reflect.TypeOf((*MockChannel)(nil).Escape), arg0)
+}
+
 // Close mocks base method
 func (m *MockChannel) Close() error {
 	m.ctrl.T.Helper()
