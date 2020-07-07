@@ -126,13 +126,13 @@ func TestIngest_Push(t *testing.T) {
 			name: "should escape text",
 			setup: func(s *Server) {
 				s.ConfigureStart("ingest", 20000)
-				s.On(`^PUSH collection bucket object "\\\\ \\n \\\""$`).Send("OK")
+				s.On(`^PUSH collection bucket object "\\\\ \\n \\\" \\\\"$`).Send("OK")
 			},
 			request: sonic.PushRequest{
 				Collection: "collection",
 				Bucket:     "bucket",
 				Object:     "object",
-				Text:       "\\ \n \"",
+				Text:       "\\ \n \" \\",
 			},
 		},
 	}
@@ -236,13 +236,13 @@ func TestIngest_Pop(t *testing.T) {
 			name: "should escape text",
 			setup: func(s *Server) {
 				s.ConfigureStart("ingest", 20000)
-				s.On(`^POP collection bucket object "\\\\ \\n \\\""$`).Send("RESULT 10")
+				s.On(`^POP collection bucket object "\\\\ \\n \\\" \\\\"$`).Send("RESULT 10")
 			},
 			request: sonic.PopRequest{
 				Collection: "collection",
 				Bucket:     "bucket",
 				Object:     "object",
-				Text:       "\\ \n \"",
+				Text:       "\\ \n \" \\",
 			},
 			exp: 10,
 		},

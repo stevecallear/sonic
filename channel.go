@@ -124,9 +124,9 @@ func (c *channel) Split(s string) []string {
 }
 
 func (c *channel) Escape(s string) string {
-	s = strings.ReplaceAll(s, "\\", "\\\\")
-	s = strings.ReplaceAll(s, "\n", "\\n")
-	s = strings.ReplaceAll(s, "\"", "\\\"")
+	s = strings.Replace(s, "\\", "\\\\", -1)
+	s = strings.Replace(s, "\n", "\\n", -1)
+	s = strings.Replace(s, "\"", "\\\"", -1)
 
 	return s
 }
