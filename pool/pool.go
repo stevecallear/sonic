@@ -30,6 +30,7 @@ type (
 		Write(string) error
 		Read() (string, error)
 		Split(string) []string
+		Escape(string) string
 		Close() error
 	}
 )

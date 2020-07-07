@@ -57,7 +57,7 @@ func NewIngest(o Options) *Ingest {
 func (i *Ingest) Push(r PushRequest) error {
 	return i.pool.Exec(func(c pool.Channel) error {
 		for _, t := range c.Split(r.Text) {
-			msg := fmt.Sprintf("PUSH %s %s %s \"%s\"", r.Collection, r.Bucket, r.Object, t)
+			msg := fmt.Sprintf("PUSH %s %s %s \"%s\"", r.Collection, r.Bucket, r.Object, c.Escape(t))
 			msg = appendLang(msg, r.Lang)
 
 			err := c.Write(msg)
@@ -81,7 +81,7 @@ func (i *Ingest) Pop(r PopRequest) (int, error) {
 	res, err := i.pool.Query(func(c pool.Channel) (interface{}, error) {
 		var nt int
 		for _, t := range c.Split(r.Text) {
-			err := c.Write(fmt.Sprintf("POP %s %s %s \"%s\"", r.Collection, r.Bucket, r.Object, t))
+			err := c.Write(fmt.Sprintf("POP %s %s %s \"%s\"", r.Collection, r.Bucket, r.Object, c.Escape(t)))
 			if err != nil {
 				return nt, err
 			}
