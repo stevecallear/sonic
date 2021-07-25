@@ -5,48 +5,63 @@
 package mocks
 
 import (
-	gomock "github.com/golang/mock/gomock"
 	reflect "reflect"
+
+	gomock "github.com/golang/mock/gomock"
 )
 
-// MockChannel is a mock of Channel interface
+// MockChannel is a mock of Channel interface.
 type MockChannel struct {
 	ctrl     *gomock.Controller
 	recorder *MockChannelMockRecorder
 }
 
-// MockChannelMockRecorder is the mock recorder for MockChannel
+// MockChannelMockRecorder is the mock recorder for MockChannel.
 type MockChannelMockRecorder struct {
 	mock *MockChannel
 }
 
-// NewMockChannel creates a new mock instance
+// NewMockChannel creates a new mock instance.
 func NewMockChannel(ctrl *gomock.Controller) *MockChannel {
 	mock := &MockChannel{ctrl: ctrl}
 	mock.recorder = &MockChannelMockRecorder{mock}
 	return mock
 }
 
-// EXPECT returns an object that allows the caller to indicate expected use
+// EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockChannel) EXPECT() *MockChannelMockRecorder {
 	return m.recorder
 }
 
-// Write mocks base method
-func (m *MockChannel) Write(arg0 string) error {
+// Close mocks base method.
+func (m *MockChannel) Close() error {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Write", arg0)
+	ret := m.ctrl.Call(m, "Close")
 	ret0, _ := ret[0].(error)
 	return ret0
 }
 
-// Write indicates an expected call of Write
-func (mr *MockChannelMockRecorder) Write(arg0 interface{}) *gomock.Call {
+// Close indicates an expected call of Close.
+func (mr *MockChannelMockRecorder) Close() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Write", reflect.TypeOf((*MockChannel)(nil).Write), arg0)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Close", reflect.TypeOf((*MockChannel)(nil).Close))
 }
 
-// Read mocks base method
+// Escape mocks base method.
+func (m *MockChannel) Escape(arg0 string) string {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Escape", arg0)
+	ret0, _ := ret[0].(string)
+	return ret0
+}
+
+// Escape indicates an expected call of Escape.
+func (mr *MockChannelMockRecorder) Escape(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Escape", reflect.TypeOf((*MockChannel)(nil).Escape), arg0)
+}
+
+// Read mocks base method.
 func (m *MockChannel) Read() (string, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Read")
@@ -55,13 +70,13 @@ func (m *MockChannel) Read() (string, error) {
 	return ret0, ret1
 }
 
-// Read indicates an expected call of Read
+// Read indicates an expected call of Read.
 func (mr *MockChannelMockRecorder) Read() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Read", reflect.TypeOf((*MockChannel)(nil).Read))
 }
 
-// Split mocks base method
+// Split mocks base method.
 func (m *MockChannel) Split(arg0 string) []string {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Split", arg0)
@@ -69,36 +84,22 @@ func (m *MockChannel) Split(arg0 string) []string {
 	return ret0
 }
 
-// Split indicates an expected call of Split
+// Split indicates an expected call of Split.
 func (mr *MockChannelMockRecorder) Split(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Split", reflect.TypeOf((*MockChannel)(nil).Split), arg0)
 }
 
-// Escape mocks base method
-func (m *MockChannel) Escape(arg0 string) string {
+// Write mocks base method.
+func (m *MockChannel) Write(arg0 string) error {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Escape", arg0)
-	ret0, _ := ret[0].(string)
-	return ret0
-}
-
-// Escape indicates an expected call of Escape
-func (mr *MockChannelMockRecorder) Escape(arg0 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Escape", reflect.TypeOf((*MockChannel)(nil).Escape), arg0)
-}
-
-// Close mocks base method
-func (m *MockChannel) Close() error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Close")
+	ret := m.ctrl.Call(m, "Write", arg0)
 	ret0, _ := ret[0].(error)
 	return ret0
 }
 
-// Close indicates an expected call of Close
-func (mr *MockChannelMockRecorder) Close() *gomock.Call {
+// Write indicates an expected call of Write.
+func (mr *MockChannelMockRecorder) Write(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Close", reflect.TypeOf((*MockChannel)(nil).Close))
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Write", reflect.TypeOf((*MockChannel)(nil).Write), arg0)
 }

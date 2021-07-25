@@ -12,8 +12,3 @@ cover: generate
 	go test -race -coverprofile=coverage.out -covermode=atomic ./...
 	go tool cover -func=coverage.out
 	rm coverage.out
-
-.PHONY: build
-build: test
-	env GOOS=linux GOARCH=amd64 go build -o ./bin/sonic ./cmd/sonic
-	env GOOS=windows GOARCH=amd64 go build -o ./bin/sonic.exe ./cmd/sonic
