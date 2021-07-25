@@ -13,5 +13,4 @@
 
 bin/
 cmd/
-.devcontainer/
 .vscode/
